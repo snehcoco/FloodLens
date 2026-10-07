@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 from pathlib import Path
+from math import ceil, floor
 
 import numpy as np
 import rasterio
 from rasterio.enums import Resampling
-from rasterio.warp import reproject
+from rasterio.warp import reproject, transform_bounds
+from rasterio.windows import from_bounds
 from scipy import ndimage
 from skimage.filters import threshold_otsu
 
@@ -93,6 +95,7 @@ def create_flood_products(
     green_band: int = 3,
     nir_band: int = 8,
     min_component_pixels: int = 4,
+    bbox: tuple[float, float, float, float] | None = None,
 ) -> dict[str, Path]:
     """Create aligned SAR change, SAR candidate, and final evidence-fused masks.
 
@@ -121,9 +124,31 @@ def create_flood_products(
         )
         profile = before_src.profile.copy()
         profile.update(count=1, dtype="float32", nodata=np.nan, compress="deflate")
+        area_valid = np.ones((before_src.height, before_src.width), dtype=bool)
+        if bbox is not None:
+            west, south, east, north = bbox
+            if west >= east or south >= north:
+                raise ValueError("bbox must be ordered west, south, east, north.")
+            raster_bounds = transform_bounds(
+                "EPSG:4326",
+                before_src.crs,
+                west,
+                south,
+                east,
+                north,
+            )
+            window = from_bounds(*raster_bounds, transform=before_src.transform)
+            row_start = max(0, floor(window.row_off))
+            row_stop = min(before_src.height, ceil(window.row_off + window.height))
+            column_start = max(0, floor(window.col_off))
+            column_stop = min(before_src.width, ceil(window.col_off + window.width))
+            area_valid[:] = False
+            if row_start >= row_stop or column_start >= column_stop:
+                raise ValueError("The selected bounding box does not overlap the input rasters.")
+            area_valid[row_start:row_stop, column_start:column_stop] = True
 
     change = compute_sar_change(before, after, dB_mode=inputs_are_db)
-    valid = np.isfinite(before) & np.isfinite(after) & np.isfinite(change)
+    valid = area_valid & np.isfinite(before) & np.isfinite(after) & np.isfinite(change)
     sar_mask = create_flood_mask_from_change(change, valid_mask=valid)
     final_mask = sar_mask.copy()
     final_valid = valid.copy()

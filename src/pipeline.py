@@ -28,6 +28,7 @@ def run_pipeline(
     after_sar: str | Path,
     output_dir: str | Path,
     event_date: str | None = None,
+    bbox: tuple[float, float, float, float] | None = None,
     inputs_are_db: bool = False,
     optical_before: str | Path | None = None,
     optical_after: str | Path | None = None,
@@ -62,6 +63,7 @@ def run_pipeline(
         inputs_are_db=inputs_are_db,
         optical_before_path=optical_before,
         optical_after_path=optical_after,
+        bbox=bbox,
     )
     is_synthetic_fixture = any("demo" in Path(path).stem.casefold() for path in (before_sar, after_sar))
 

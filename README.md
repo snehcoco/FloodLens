@@ -4,11 +4,35 @@ FloodLens is an educational prototype for mapping potential flood/debris change,
 
 ## Run
 
-Use Python 3.10+ and install dependencies:
+Use Python 3.10+ and install dependencies in the execution-plan stages:
 
 ```powershell
-python -m pip install -r requirements.txt
+# Stage 1: dashboard and geospatial pipeline
+python -m pip install numpy pandas matplotlib rasterio geopandas shapely scipy scikit-image folium streamlit osmnx networkx sentinelsat
+
+# Stage 2: only when training or running the segmentation model
+python -m pip install torch torchvision segmentation-models-pytorch albumentations
+
+# Stage 3: only when using PDF export, Nepali translation, or DEM tracing
+python -m pip install pysheds transformers sentencepiece reportlab
+
 python -m streamlit run app/app.py
+```
+
+`requirements.txt` lists all three stages for environments where a complete installation is intentionally desired.
+
+### Quick UI smoke test
+
+From the repository root, create a clearly synthetic SAR pair:
+
+```powershell
+python -c "from src.flood_mapping.sar import generate_demo_sar_rasters; print(generate_demo_sar_rasters())"
+```
+
+Copy the printed `before` and `after` paths into the corresponding dashboard fields. Leave the dB checkbox off and optional inputs blank. The dashboard warns that this fixture is synthetic; its mask is only a software check, not a Trishuli observation. To exercise the full raster → OSM overlay → cut-off workflow using temporary synthetic test fixtures, run:
+
+```powershell
+python -m unittest discover -s tests -v
 ```
 
 The dashboard accepts preprocessed GeoTIFFs and pre-event GeoJSON files. Sentinel-1 before/after rasters must use the same polarization and processing scale. The app checks embedded relative-orbit metadata when available, aligns the after raster to the before raster, computes log(after/before) for linear intensity or after-before for dB, and thresholds absolute change with Otsu. The optional Sentinel-2 branch computes NDWI from bands 3 and 8 and adds pixels with a reliable new-water signal.

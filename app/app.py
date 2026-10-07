@@ -103,6 +103,7 @@ if sidebar.button("Run Pipeline", type="primary"):
                 after_sar=after_path.strip(),
                 output_dir=Path(__file__).resolve().parents[1] / "outputs",
                 event_date=event_date.isoformat(),
+                bbox=(min_lon, min_lat, max_lon, max_lat),
                 inputs_are_db=inputs_are_db,
                 optical_before=optical_before.strip() or None,
                 optical_after=optical_after.strip() or None,
