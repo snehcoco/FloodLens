@@ -35,7 +35,7 @@ Copy the printed `before` and `after` paths into the corresponding dashboard fie
 python -m unittest discover -s tests -v
 ```
 
-The dashboard accepts preprocessed GeoTIFFs and pre-event GeoJSON files. Sentinel-1 before/after rasters must use the same polarization and processing scale. The app checks embedded relative-orbit metadata when available, aligns the after raster to the before raster, computes log(after/before) for linear intensity or after-before for dB, and thresholds absolute change with Otsu. The optional Sentinel-2 branch computes NDWI from bands 3 and 8 and adds pixels with a reliable new-water signal.
+The dashboard accepts preprocessed GeoTIFFs and pre-event GeoJSON files. Sentinel-1 before/after rasters must use the same polarization and processing scale. The app checks embedded relative-orbit metadata when available, aligns the after raster to the before raster, clips valid analysis pixels to the chosen bounding box, computes log(after/before) for linear intensity or after-before for dB, and thresholds absolute change with Otsu. The optional Sentinel-2 branch computes NDWI from bands 3 and 8 and adds pixels with a reliable new-water signal.
 
 For pre-event OSM, use **Download pre-event OSM snapshot** in the app. It requests building, highway, and bridge geometries from ohsome for 27 July 2026. Choose the downloaded layers in the respective input fields. Settlement and hospital point layers may be supplied separately to run accessibility analysis.
 

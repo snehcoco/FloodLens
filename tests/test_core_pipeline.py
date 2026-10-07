@@ -83,6 +83,7 @@ class CorePipelineTests(unittest.TestCase):
                 after_sar=after_path,
                 output_dir=root / "outputs",
                 event_date="2026-08-26",
+                bbox=(85.0, 27.99, 85.01, 28.0),
                 buildings=buildings_path,
                 roads=roads_path,
                 settlements=settlements_path,
@@ -93,6 +94,7 @@ class CorePipelineTests(unittest.TestCase):
                 final_mask = mask.read(1)
                 self.assertEqual(mask.crs.to_string(), "EPSG:4326")
                 self.assertTrue(np.any(final_mask == 1))
+                self.assertEqual(final_mask[0, 19], 255)
             self.assertGreater(result["infrastructure"]["summary"]["potentially_damaged_buildings"], 0)
             self.assertEqual(result["cutoff"]["cutoff_count"], 1)
             cutoff = gpd.read_file(result["cutoff"]["path"])
