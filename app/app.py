@@ -121,6 +121,8 @@ result = st.session_state.get("pipeline_result")
 if result:
     products = result["products"]
     mask_path = products["flood_mask"]
+    if result["synthetic_fixture"]:
+        st.warning("Synthetic software-test data detected. This map is not a real flood observation or Trishuli result.")
     polygon_path = Path(result["report"]).parents[1] / "geojson" / "flood_polygons.geojson"
     if not polygon_path.exists():
         polygons = flood_polygons_from_mask(mask_path)
