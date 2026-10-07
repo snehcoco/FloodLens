@@ -63,9 +63,11 @@ def run_pipeline(
         optical_before_path=optical_before,
         optical_after_path=optical_after,
     )
+    is_synthetic_fixture = any("demo" in Path(path).stem.casefold() for path in (before_sar, after_sar))
 
     result: dict[str, object] = {
         "products": products,
+        "synthetic_fixture": is_synthetic_fixture,
         "orbit": {"before": before_orbit, "after": after_orbit},
         "infrastructure": None,
         "cutoff": None,
@@ -104,6 +106,11 @@ def run_pipeline(
 
     summary: dict[str, object] = {
         "Event date": event_date or "not specified",
+        "Input status": (
+            "SYNTHETIC SOFTWARE-TEST DATA — not observed satellite imagery."
+            if is_synthetic_fixture
+            else "User-supplied satellite rasters; source validity is not independently verified."
+        ),
         "SAR inputs are in dB": inputs_are_db,
         "Sentinel-1 before relative orbit": before_orbit or "not embedded; manual verification required",
         "Sentinel-1 after relative orbit": after_orbit or "not embedded; manual verification required",
