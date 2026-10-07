@@ -1,0 +1,20 @@
+FloodLens Situation Report
+==========================
+Potential impacts are satellite/OSM overlap estimates, not confirmed damage.
+
+Event date: 2026-08-26
+Input status: SYNTHETIC SOFTWARE-TEST DATA — not observed satellite imagery.
+SAR inputs are in dB: False
+Sentinel-1 before relative orbit: not embedded; manual verification required
+Sentinel-1 after relative orbit: not embedded; manual verification required
+Final flood mask: C:\Users\Sneh2\Documents\FloodLens\outputs\processed\flood_mask.tif
+Infrastructure analysis: Not run: pre-event OSM layers were not supplied.
+Cut-off analysis: Not run: roads, settlements, and hospitals were not all supplied.
+Limitations: Potential impact is inferred from raster overlap, not ground truth. Sentinel revisit timing, cloud cover, terrain effects, and OSM completeness constrain results.
+
+Data attributions (apply when the corresponding data are used):
+Contains modified Copernicus Sentinel data 2026.
+Produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.
+© OpenStreetMap contributors.
+Kuro Siwo training data: cite Bountos et al., 2024 if this dataset was used.
+European Union, Copernicus Emergency Management Service data (EMSR927) — checking only; never used as input.
