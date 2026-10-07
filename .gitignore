@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local environment and editor files
+.env
+.vscode/
+
+# Geospatial data (ignore imagery and datasets, but keep directory placeholders)
+data/*
+!data/**/
+data/**/*
+!data/**/
+!data/**/.gitkeep
+
+# Generated outputs (keep directory placeholders)
+outputs/*
+!outputs/**/
+!outputs/**/.gitkeep

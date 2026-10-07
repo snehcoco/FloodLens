@@ -1,0 +1,24 @@
+numpy
+pandas
+matplotlib
+rasterio
+geopandas
+shapely
+scipy
+scikit-image
+folium
+streamlit
+osmnx
+networkx
+sentinelsat
+
+# AI / Deep learning (Module 4)
+torch
+albumentations
+segmentation-models-pytorch
+
+# Reports and translation (Module 5)
+pysheds
+transformers
+sentencepiece
+reportlab
