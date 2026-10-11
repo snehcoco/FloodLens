@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -13,6 +14,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 from folium.plugins import HeatMap
 from rasterio.warp import transform as reproject_coordinates
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.data_ingestion.sentinel import TRISHULI_AOI, download_ohsome_snapshot, ensure_repo_layout
 from src.infrastructure.damage import flood_polygons_from_mask
