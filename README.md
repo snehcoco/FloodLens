@@ -35,6 +35,21 @@ Copy the printed `before` and `after` paths into the corresponding dashboard fie
 python -m unittest discover -s tests -v
 ```
 
+#### Values to enter in the dashboard
+
+After generating the demo rasters, enter these paths in the sidebar (from the repository root):
+
+| Dashboard field | Demo value |
+| --- | --- |
+| Sentinel-1 before GeoTIFF | `data\processed\before_demo.tif` |
+| Sentinel-1 after GeoTIFF | `data\processed\after_demo.tif` |
+| SAR rasters contain dB values | Unchecked |
+| Sentinel-2 before/after | Leave both blank |
+| Pre-event OSM buildings and roads | Leave both blank for a raster-only demo |
+| OSM bridges, settlements, hospitals, and model uncertainty | Leave blank |
+
+Keep the default bounding box and event date, then click **Run Pipeline**. The demo rasters overlap the default bounding box. FloodLens will create the mask and report under `outputs\` and display a warning that the inputs are synthetic. With the OSM fields blank, infrastructure-overlap and settlement cut-off analyses are skipped; the demo is not a real flood observation. To include those analyses, download a pre-event OSM snapshot in the app and select its buildings, roads, and other applicable layers.
+
 The dashboard accepts preprocessed GeoTIFFs and pre-event GeoJSON files. Sentinel-1 before/after rasters must use the same polarization and processing scale. The app checks embedded relative-orbit metadata when available, aligns the after raster to the before raster, clips valid analysis pixels to the chosen bounding box, computes log(after/before) for linear intensity or after-before for dB, and thresholds absolute change with Otsu. The optional Sentinel-2 branch computes NDWI from bands 3 and 8 and adds pixels with a reliable new-water signal.
 
 For pre-event OSM, use **Download pre-event OSM snapshot** in the app. It requests building, highway, and bridge geometries from ohsome for 27 July 2026. Choose the downloaded layers in the respective input fields. Settlement and hospital point layers may be supplied separately to run accessibility analysis.
