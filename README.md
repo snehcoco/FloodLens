@@ -65,21 +65,4 @@ The SAR GeoTIFFs must be preprocessed before loading: apply orbit correction, ra
 
 The Nepali translation uses Helsinki-NLP MarianMT (`Helsinki-NLP/opus-mt-en-ne`). It may download/cache model weights on first use; translated labels retain the source report's values verbatim. PDF generation needs ReportLab.
 
-## Data integrity and limitations
 
-- Never use EMSR927, UNOSAT, other published damage maps, or post-event OSM edits as model inputs or thresholds. EMSR927 is for checking results only.
-- Use the same Sentinel-1 relative orbit for pixelwise comparison. If orbit tags are absent from the rasters, verify the orbit pair manually.
-- OSM overlap is labelled **potentially damaged/disrupted**, not ground-truth damage. The cut-off result depends on the completeness and topology of mapped roads and facilities.
-- Sentinel revisit timing may miss peak flood extent; SAR terrain effects, clouds in optical imagery, and incomplete rural OSM all affect results. This system cannot provide real-time warnings.
-- Do not include images of victims in the dashboard, report, or demo.
-- A final case-study accuracy comparison with EMSR927, full raw-scene acquisition/preprocessing, and validation on the actual Kuro Siwo held-out events require those source data and must be performed separately.
-
-## Required submission attributions
-
-Include applicable attributions in every submission and generated report:
-
-- “Contains modified Copernicus Sentinel data 2026.”
-- “Produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.”
-- “© OpenStreetMap contributors.”
-- Kuro Siwo: cite Bountos et al., 2024, if used for training.
-- EMSR927 checking reference: credit “European Union, Copernicus Emergency Management Service data”.
