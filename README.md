@@ -7,13 +7,10 @@ FloodLens is an educational prototype for mapping potential flood/debris change,
 Use Python 3.10+ and install dependencies in the execution-plan stages:
 
 ```powershell
-# Stage 1: dashboard and geospatial pipeline
 python -m pip install numpy pandas matplotlib rasterio geopandas shapely scipy scikit-image folium streamlit osmnx networkx sentinelsat
 
-# Stage 2: only when training or running the segmentation model
 python -m pip install torch torchvision segmentation-models-pytorch albumentations
 
-# Stage 3: only when using PDF export, Nepali translation, or DEM tracing
 python -m pip install pysheds transformers sentencepiece reportlab
 
 python -m streamlit run app/app.py
